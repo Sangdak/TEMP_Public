@@ -3,9 +3,6 @@ from dotenv import load_dotenv
 import requests
 
 
-load_dotenv()
-
-
 def is_bitlink(url):
     if 'bit.ly' in url:
         return True
@@ -47,4 +44,5 @@ def main():
 
 
 if __name__ == '__main__':
+    load_dotenv()
     print(main())
