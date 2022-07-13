@@ -5,7 +5,7 @@ import requests
 
 
 def is_bitlink(url, header):
-    request_url = 'https://api-ssl.bitly.com/v4/bitlinks/{}'.format(url)
+    request_url = f'https://api-ssl.bitly.com/v4/bitlinks/{url}'
     try:
         response = requests.get(request_url, headers=header)
         response.raise_for_status()
@@ -16,7 +16,7 @@ def is_bitlink(url, header):
 
 def shorten_url(url, header):
     request_url = 'https://api-ssl.bitly.com/v4/bitlinks'
-    payload = {"long_url": "{}".format(url)}
+    payload = {"long_url": f"{url}"}
 
     response = requests.post(request_url, headers=header, json=payload)
     response.raise_for_status()
@@ -24,7 +24,7 @@ def shorten_url(url, header):
 
 
 def count_clicks(url, header):
-    request_url = 'https://api-ssl.bitly.com/v4/bitlinks/{}/clicks/summary'.format(url)
+    request_url = f'https://api-ssl.bitly.com/v4/bitlinks/{url}/clicks/summary'
 
     response = requests.get(request_url, headers=header)
     response.raise_for_status()
@@ -32,19 +32,16 @@ def count_clicks(url, header):
 
 
 def main():
-    autorization_data = {"Authorization": "Bearer {}".format(os.getenv("TOKEN"))}
+    autorization_data = {"Authorization": f"Bearer {os.getenv('TOKEN')}"}
     input_url = input('Input your URL: ')
     parse = urlparse(input_url)
     formatted_url = parse.netloc + parse.path
-    url_is_bitlink = is_bitlink(formatted_url, autorization_data)
 
     try:
-        if not url_is_bitlink:
-            bitlink = shorten_url(input_url, autorization_data)
-            return f'Битлинк {bitlink}'
+        if not is_bitlink(formatted_url, autorization_data):
+            return f'Битлинк {shorten_url(input_url, autorization_data)}'
         else:
-            clicks = count_clicks(formatted_url, autorization_data)
-            return f'По вашей ссылке перешли {clicks} раз(а).'
+            return f'По вашей ссылке перешли {count_clicks(formatted_url, autorization_data)} раз(а).'
     except requests.exceptions.HTTPError:
         return f'Сссылка {input_url} не может быть обработана, проверьте ввод!'
 
