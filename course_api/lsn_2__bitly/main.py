@@ -9,7 +9,7 @@ def is_bitlink(url, header):
     try:
         response = requests.get(request_url, headers=header)
         response.raise_for_status()
-    except:
+    except requests.exceptions.HTTPError:
         return False
     return True
 
