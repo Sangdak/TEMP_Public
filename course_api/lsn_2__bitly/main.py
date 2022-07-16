@@ -34,8 +34,8 @@ def count_clicks(url, header):
 def main():
     autorisation_token = {"Authorization": f"Bearer {os.getenv('BITLY_TOKEN')}"}
     input_url = input('Input your URL: ')
-    urlparse_tuple = urlparse(input_url)
-    formatted_url = f'{urlparse_tuple.netloc}{urlparse_tuple.path}'
+    urlparse_path = urlparse(input_url)
+    formatted_url = f'{urlparse_path.netloc}{urlparse_path.path}'
 
     try:
         if not is_bitlink(formatted_url, autorisation_token):
