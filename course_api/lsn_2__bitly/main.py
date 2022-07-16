@@ -32,7 +32,7 @@ def count_clicks(url, header):
 
 
 def main():
-    autorization_data = {"Authorization": f"Bearer {os.getenv('TOKEN')}"}
+    autorization_data = {"Authorization": f"Bearer {os.getenv('BITLY_TOKEN')}"}
     input_url = input('Input your URL: ')
     parse = urlparse(input_url)
     formatted_url = f'{parse.netloc}{parse.path}'
