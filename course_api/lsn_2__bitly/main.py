@@ -32,16 +32,16 @@ def count_clicks(url, header):
 
 
 def main():
-    autorization_data = {"Authorization": f"Bearer {os.getenv('BITLY_TOKEN')}"}
+    autorization_bearer = {"Authorization": f"Bearer {os.getenv('BITLY_TOKEN')}"}
     input_url = input('Input your URL: ')
-    parse = urlparse(input_url)
-    formatted_url = f'{parse.netloc}{parse.path}'
+    urlparse_tuple = urlparse(input_url)
+    formatted_url = f'{urlparse_tuple.netloc}{urlparse_tuple.path}'
 
     try:
-        if not is_bitlink(formatted_url, autorization_data):
-            return f'Битлинк {shorten_url(input_url, autorization_data)}'
+        if not is_bitlink(formatted_url, autorization_bearer):
+            return f'Битлинк {shorten_url(input_url, autorization_bearer)}'
         else:
-            return f'По вашей ссылке перешли {count_clicks(formatted_url, autorization_data)} раз(а).'
+            return f'По вашей ссылке перешли {count_clicks(formatted_url, autorization_bearer)} раз(а).'
     except requests.exceptions.HTTPError:
         return f'Сссылка {input_url} не может быть обработана, проверьте ввод!'
 
