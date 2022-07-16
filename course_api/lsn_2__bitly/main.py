@@ -35,7 +35,7 @@ def main():
     autorization_data = {"Authorization": f"Bearer {os.getenv('TOKEN')}"}
     input_url = input('Input your URL: ')
     parse = urlparse(input_url)
-    formatted_url = parse.netloc + parse.path
+    formatted_url = f'{parse.netloc}{parse.path}'
 
     try:
         if not is_bitlink(formatted_url, autorization_data):
